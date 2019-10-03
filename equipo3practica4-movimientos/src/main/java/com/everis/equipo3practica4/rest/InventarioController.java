@@ -44,6 +44,7 @@ public class InventarioController {
 				inventario.setCantidad(cantidad);
 				inventario.setProducto(producto);
 				inventarioService.insertarInventario(inventario);
+				response.setValue(producto);
 				response.setSuccessful(true);
 				response.setMessage("Producto Actualizado");
 			} else {
