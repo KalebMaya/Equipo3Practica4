@@ -1,5 +1,5 @@
 package com.everis.equipo3practica4.model;
-// Generated 3/10/2019 10:31:07 AM by Hibernate Tools 5.2.12.Final
+// Generated 3/10/2019 11:54:22 AM by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,29 +23,25 @@ public class Producto implements java.io.Serializable {
 	private String descripcion;
 	private String nombre;
 	private double precio;
-	private String url;
-	private int stock;
-	private Set<PedidoHasProducto> pedidoHasProductos = new HashSet<PedidoHasProducto>(0);
+	private String imagen;
+	private Set<Inventario> inventarios = new HashSet<Inventario>(0);
 
 	public Producto() {
 	}
 
-	public Producto(String descripcion, String nombre, double precio, String url, int stock) {
+	public Producto(String descripcion, String nombre, double precio, String imagen) {
 		this.descripcion = descripcion;
 		this.nombre = nombre;
 		this.precio = precio;
-		this.url = url;
-		this.stock = stock;
+		this.imagen = imagen;
 	}
 
-	public Producto(String descripcion, String nombre, double precio, String url, int stock,
-			Set<PedidoHasProducto> pedidoHasProductos) {
+	public Producto(String descripcion, String nombre, double precio, String imagen, Set<Inventario> inventarios) {
 		this.descripcion = descripcion;
 		this.nombre = nombre;
 		this.precio = precio;
-		this.url = url;
-		this.stock = stock;
-		this.pedidoHasProductos = pedidoHasProductos;
+		this.imagen = imagen;
+		this.inventarios = inventarios;
 	}
 
 	@Id
@@ -87,31 +83,22 @@ public class Producto implements java.io.Serializable {
 		this.precio = precio;
 	}
 
-	@Column(name = "url", nullable = false, length = 50)
-	public String getUrl() {
-		return this.url;
+	@Column(name = "imagen", nullable = false, length = 200)
+	public String getImagen() {
+		return this.imagen;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	@Column(name = "stock", nullable = false)
-	public int getStock() {
-		return this.stock;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
-	public Set<PedidoHasProducto> getPedidoHasProductos() {
-		return this.pedidoHasProductos;
+	public Set<Inventario> getInventarios() {
+		return this.inventarios;
 	}
 
-	public void setPedidoHasProductos(Set<PedidoHasProducto> pedidoHasProductos) {
-		this.pedidoHasProductos = pedidoHasProductos;
+	public void setInventarios(Set<Inventario> inventarios) {
+		this.inventarios = inventarios;
 	}
 
 }
