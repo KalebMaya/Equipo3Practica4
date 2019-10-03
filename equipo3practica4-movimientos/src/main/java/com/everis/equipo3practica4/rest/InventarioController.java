@@ -18,8 +18,12 @@ import com.everis.equipo3practica4.response.InventarioResponse;
 import com.everis.equipo3practica4.service.InventarioService;
 import com.everis.equipo3practica4.service.ProductoService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 @RestController
+@Api (value= "REST servicio movimientos de inventario")
 @RequestMapping("movimientos")
 public class InventarioController {
 
@@ -29,7 +33,7 @@ public class InventarioController {
 	@Autowired
 	ProductoService productoService;
 
-
+	@ApiOperation("Registrar un movimiento en inventario")
 	@PostMapping("/entrada-salida/producto/{idproducto}/entrada/{cantidad}")
 	public InventarioResponse insertar(@PathVariable int idproducto, @PathVariable int cantidad) {
 
@@ -59,7 +63,7 @@ public class InventarioController {
 		}return response;
 	}
 
-	
+	@ApiOperation("Listar movimientos del inventario")
 	@GetMapping("/{id}")
 	public List<Inventario> consulta(@PathVariable int id) {
 
