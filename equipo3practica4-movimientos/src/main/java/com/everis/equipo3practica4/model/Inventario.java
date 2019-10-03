@@ -48,7 +48,7 @@ public class Inventario implements java.io.Serializable {
 		this.idinventario = idinventario;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idproducto", nullable = false)
 	public Producto getProducto() {
 		return this.producto;
