@@ -1,9 +1,18 @@
 package com.everis.equipo3practica4enviaremail.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.everis.equipo3practica4enviaremail.model.Inventario;
+import com.everis.equipo3practica4enviaremail.model.Producto;
+import com.everis.equipo3practica4enviaremail.proxy.ProductosProxy;
+import com.everis.equipo3practica4enviaremail.response.InventarioResponse;
 import com.everis.equipo3practica4enviaremail.service.EmailService;
 
 import io.swagger.annotations.Api;
@@ -13,57 +22,53 @@ import io.swagger.annotations.ApiOperation;
 @Api (value= "REST servicio para enviar correo")
 public class EnviarNotificacionesController {
 	
-//	@Autowired
-//	private ProductosProxy productosProxy;
+	@Autowired
+	private ProductosProxy productosProxy;
 	
 	@Autowired
 	private EmailService servicioEmail;
-
-//	@GetMapping("/pedido/")
-//	public List<Pedido> checar() {
-//		return productosProxy.listar();
-//	}
-	@ApiOperation("Enviar correo")
-	@PostMapping("/enviacorreo/")
-	public boolean enviaremail() {
-		servicioEmail.enviarCorreoHTML("vkaleb7@hotmail.com", "Academia-Everis-Examen1", "<h1>Ya esta mi examen profe</h1>");
-		return true;
+	
+	@ApiOperation("Listar productos")
+	@GetMapping("/producto/")
+	public List<Producto> checar() {
+		return productosProxy.listarProducto();
 	}
 	
-//	@PostMapping("/pedido/idproductos/{idproductos}")
-//	public String convert(@PathVariable String idproductos, @RequestBody Pedido pedido) {
-//		Pedido pedidoinsertado = productosProxy.insertaPedido(pedido);
-//		String[] listaproductos = idproductos.split(",");
-//		String respuesta = "";
-//		for (String idproducto : listaproductos) {
-//				Integer.parseInt(idproducto);
-//				Productosdelpedido productosdelpedido = new Productosdelpedido();
-//				Producto producto = new Producto();
-//				producto.setId(Integer.parseInt(idproducto));
-//				productosdelpedido.setPedido(pedidoinsertado);
-//				productosdelpedido.setProducto(producto);
-//				respuesta += "producto: " + productosProxy.insertaProductoPedido(productosdelpedido).getProducto().getNombre() + "\n";
-//			}
-//			try {
-//			if(tiponotificacion.equals("whatsapp") || tiponotificacion.equals("ambas")) {
-//				MensajeCliente mensaje = new MensajeCliente();
-//				mensaje.setMensaje(respuesta);
-//				mensaje.setNumero(whatsappdestino);
-//				UbicacionCliente ubicacion = new UbicacionCliente();
-//				ubicacion.setDireccion("Casa de " + pedidoinsertado.getCliente().getNombre());
-//				ubicacion.setLatitud(pedidoinsertado.getCliente().getLatitud());
-//				ubicacion.setLongitud(pedidoinsertado.getCliente().getLongitud());
-//				ubicacion.setNumero(whatsappdestino);
-//				whatsappProxy.enviarmensaje(whatzmeapitoken, mensaje);
-//				whatsappProxy.enviarubicacion(whatzmeapitoken, ubicacion);
-//			}if(tiponotificacion.equals("email") || tiponotificacion.equals("ambas")) {
-//				servicioEmail.enviarCorreo(emaildestino, "Productos comprados", respuesta);
-//			}
-//			return respuesta;
-//		} catch (Exception e) {
-//			return e.getMessage();
-//		}
-//	}
+	@ApiOperation("Listar movimientos de un producto")
+	@GetMapping("/inventario/{id}")
+	public InventarioResponse buscar(@PathVariable int id){
+		InventarioResponse respuesta = new InventarioResponse();
+		respuesta.setLista(productosProxy.consulta(id));
+		respuesta.setMessage("Exito");
+		int total = 0;
+		for (Inventario inventario : respuesta.getLista()) {
+			total += inventario.getCantidad();
+		}
+		respuesta.setTotal(total);
+		respuesta.setValue(null);
+		respuesta.setSuccessful(true);
+		return respuesta;
+	}
 	
+	@ApiOperation("Listar movimientos de un producto")
+	@PostMapping("/entrada-salida/producto/{idproducto}/entrada/{cantidad}")
+	public InventarioResponse insertarPedido(@PathVariable int idproducto, @PathVariable int cantidad){
+		InventarioResponse respuesta = productosProxy.insertar(idproducto, cantidad);
+		respuesta.setLista(null);
+		respuesta.setTotal(cantidad);
+		return respuesta;
+	}
+	
+	@ApiOperation("Enviar correo")
+	@PostMapping("/producto/")
+	public boolean enviaremail(@RequestBody Producto producto) {
+		productosProxy.registrarProducto(producto);
+//		servicioEmail.enviarCorreoHTML("vkaleb7@hotmail.com", "Academia-Everis-Examen1", 
+//				producto.getNombre() + "\n" + producto.getDescripcion() + "\n" 
+//				+ "<image src=\" + producto.getImagen() + "/>");
+		servicioEmail.enviarCorreoHTML("vkaleb7@hotmail.com", producto.getNombre(),
+				"<img src=\"" + producto.getImagen() + "\"><br>" + producto.getDescripcion());
+		return true;
+	}
 
 }
