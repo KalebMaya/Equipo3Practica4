@@ -1,7 +1,8 @@
 package com.everis.equipo3practica4.rest;
 
-import java.sql.Date;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class InventarioController {
 		try {
 			if (idproducto == producto.getIdproducto()) {
 
-				inventario.setFecha(new Date(0));
+				inventario.setFecha(new Date());
 				inventario.setCantidad(cantidad);
 				inventario.setProducto(producto);
 				inventarioService.insertarInventario(inventario);
