@@ -1,10 +1,13 @@
 package com.everis.equipo3practica4.model;
 // Generated 3/10/2019 11:54:22 AM by Hibernate Tools 5.2.12.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,7 +38,7 @@ public class Inventario implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "idinventario", unique = true, nullable = false)
 	public int getIdinventario() {
 		return this.idinventario;
