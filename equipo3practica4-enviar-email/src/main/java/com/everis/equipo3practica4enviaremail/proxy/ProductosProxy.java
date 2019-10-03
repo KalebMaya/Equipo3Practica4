@@ -2,7 +2,7 @@ package com.everis.equipo3practica4enviaremail.proxy;
 
 import org.springframework.cloud.openfeign.FeignClient;
 
-@FeignClient(name="EQUIPO3PRACTICA4-VENTAS")
+@FeignClient(name="CONFIG")
 public interface ProductosProxy {
 //	@GetMapping("/pedido/")
 //	public List<Pedido> listar();
