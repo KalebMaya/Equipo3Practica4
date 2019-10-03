@@ -49,4 +49,8 @@ public class ProductoService {
 		return productoRepository.save(producto);
 	}
 	
+	public Producto buscarId(int id) {
+		return productoRepository.findById(id).get();
+	}
+	
 }
