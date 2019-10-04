@@ -1,16 +1,16 @@
 consideraciones:
-1.- Los datos estan en una BD local direccionad apor ip desde la imagen, al probar es normal que no traiga nada
-2.- Eureka no puede resolver el nombre del servicio conectado a la base por como funcionan los contenedores en windows 7, por lo que se debe probar 1 por 1
+1.- Los datos estan en una BD local direccionada por ip desde la imagen, al probar es normal que no traiga nada
+(para probar el sistema por completo, habria que crearse una base de datos en la maquina,
+el script de .sql viene en el repositorio, en la carpeta practica4 y se debe configurar la maquina con la bd a ip
+192.168.5.87)
 3.- esto se construyo en windows 7, por lo que se accede con la direcion de MV 192.168.99.100
 
 URL de prueba (enviar notificaciones)
 192.168.99.100:8100/swagger-ui.html //swagger de enviar-notificaciones
-GET 192.168.99.100:8100/producto/ //recibe lista de producto (no funciona con los container por el detalle de eureka)
-POST 192.168.99.100:8100/producto/ //inserta producto y envia correo (no funciona con container)
+GET 192.168.99.100:8100/producto/ //recibe lista de producto 
+POST 192.168.99.100:8100/producto/ //inserta producto y envia correo
 GET 192.168.99.100:8100/inventario/{id} //recibe la lista de peticiones de ese id de producto en especifico
-(no funciona en containers)
 POST 192.168.99.100:8100/entrada-salida/producto/{idproducto}/entrada/{cantidad} //inserta pedido en inventario
-(no funciona en containers)
 
 URL de prueba (movimientos)
 192.168.99.100:8200/swagger-ui.html //swagger de enviar-notificaciones
@@ -19,4 +19,11 @@ POST 192.168.99.100:8200/productos/ //inserta producto (pasar JSON)
 GET 192.168.99.100:8200/movimientos/{id} //regresa la lista de peticiones de ese id de producto en especifico
 POST 192.168.99.100:8200/movimientos/entrada-salida/producto/{idproducto}/entrada/{cantidad} //inserta pedido en inventario
 
-si no funciona el swagger del puerto 8200 se puede emplear el de 8100 para visualizar como debe enviarse la informacion en las peticiones POST que lo requieran
+si no funciona el swagger del puerto 8200 se puede emplear el de 8100 para visualizar como debe enviarse la informacion 
+en las peticiones POST que lo requieran
+
+para probar se debe
+1.- Crear contenedor eureka (esperar a que termine de inicializarse)
+2.- Crear contenedor config server (esperar a que termine de inicializarse)
+3.- Crear contenedor de imagen de movimientos
+3.- Crear contenedor de imagen de notificaciones
