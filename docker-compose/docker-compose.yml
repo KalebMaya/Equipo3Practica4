@@ -1,0 +1,24 @@
+version: '3'
+services:
+  notificaciones: 
+    image: adrianz14/equipo3notificaciones
+    ports:
+    - "8100:8100"
+    depends_on:
+    - movimientos
+  movimientos:
+    image: adrianz14/equipo3movimientos
+    ports:
+    - "8200:8200"
+    depends_on:
+    - configserver
+  configserver:
+    image: adrianz14/equipo3configserver
+    ports:
+    - "8888:8888"
+    depends_on:
+    - eurekaserver
+  eurekaserver:
+    image: adrianz14/equipo3eurekaserver
+    ports:
+    - "8761:8761"
