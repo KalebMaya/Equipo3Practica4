@@ -10,7 +10,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SwaggerConfiguration {
 
 	public static final Contact DEFAULT_CONTACT = new Contact("Osmar Kaleb Maya Morales", "https://github.com/KalebMaya", "vkaleb7@hotmail.com");
-	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Documentacion enviar correo", "Documentacion Enviar Correo", "1.0",
+	public static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Documentacion acceder a base", "Documentacion Acceder Base", "1.0",
 			"PREMIUM", DEFAULT_CONTACT, "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0");
 	
 	@Bean

@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api (value= "REST servicio de productos")
-
 @RequestMapping("productos")
 public class ProductoController {
 
