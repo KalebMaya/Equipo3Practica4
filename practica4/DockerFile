@@ -1,0 +1,3 @@
+FROM mysql
+ENV MYSQL_DATABASE practica4
+ADD data.sql /docker-entrypoint-initdb.d

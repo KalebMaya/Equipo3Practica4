@@ -12,7 +12,7 @@ import com.everis.equipo3practica4enviaremail.model.Inventario;
 import com.everis.equipo3practica4enviaremail.model.Producto;
 import com.everis.equipo3practica4enviaremail.response.InventarioResponse;
 
-@FeignClient(name="CONFIG")
+@FeignClient(name="CONFIG" , url="192.168.99.100:8200")
 public interface ProductosProxy {
 	@GetMapping("/productos/")
 	public List<Producto> listarProducto();
